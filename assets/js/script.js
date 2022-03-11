@@ -5,15 +5,19 @@ var ansEl2 = document.querySelector("#ansBtn2")
 var ansEl3 = document.querySelector("#ansBtn3")
 var ansEl4 = document.querySelector("#ansBtn4")
 var timeEl = document.querySelector("#temp")
+var recordEl = document.querySelector(".input")
 var createPEl = document.createElement("h3");
-createPEl.setAttribute("style", "font-size:15px")
 
+createPEl.setAttribute("style", "font-size:15px")
+var timeLeft = 15;
 correctAnswers = 0;
+
 //console.log(startEl)
 startEl.addEventListener("click", function() {
+
     startEl.classList.add('hide');
     ansEls.classList.remove('hide');
-    timeEl.classList.remove("hide")
+    timeEl.classList.remove('hide')
     document.getElementById("question").innerHTML = questions[0].question;
     document.getElementById("ansBtn1").innerHTML = questions[0].answers[0];
     document.getElementById("ansBtn2").innerHTML = questions[0].answers[1];
@@ -22,8 +26,8 @@ startEl.addEventListener("click", function() {
     timer ();
 })
 var i = 0
-
 ansEls.addEventListener("click", function(event) {
+
     createPEl.innerHTML = "";
         var answer = event.target;
     if (answer.textContent == questions[i].correct){
@@ -37,6 +41,7 @@ ansEls.addEventListener("click", function(event) {
        ansEls.append(createPEl)
         createPEl.textContent = "Incorrect! The answer is " + questions[i].correct;
         console.log(createPEl.textContent)
+        timeLeft = timeLeft - 5;
     }
     if (i < (questions.length -1)) {
         var quest = questions[i];
@@ -48,49 +53,71 @@ ansEls.addEventListener("click", function(event) {
     document.getElementById("ansBtn4").innerHTML = questions[i].answers[3];
  }
  else {
-     window.alert('you have reached the end of the quiz!, your score is' + "  " + (correctAnswers * 25) + '!')
+
+   endQuiz();
  }
  })
+
  var timerEl = document.getElementById('timer');
+
  function timer() {
-    var timeLeft = 50;
-    // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function () {
-      // As long as the `timeLeft` is greater than 1
-      if (timeLeft > 1) {
-        // Set the `textContent` of `timerEl` to show the remaining seconds
+      if (timeLeft > 0) {
         timerEl.textContent = timeLeft + ' seconds remaining';
-        // Decrement `timeLeft` by 1
-        timeLeft--;
-      } else if (timeLeft === 1) {
-        // When `timeLeft` is equal to 1, rename to 'second' instead of 'seconds'
-        timerEl.textContent = timeLeft + ' second remaining';
         timeLeft--;
       } else {
-        // Once `timeLeft` gets to 0, set `timerEl` to an empty string
-        timerEl.textContent = '';
-        // Use `clearInterval()` to stop the timer
+        timerEl.textContent = '0';
         clearInterval(timeInterval);
-        // Call the `displayMessage()` function
-        displayMessage();
+        endQuiz();
       }
     }, 1000);
   }
 
+  var endQuiz = function() {
+    window.alert('you have reached the end of the quiz!, your score is' + "  " + (correctAnswers * 25) + '!')
+    ansEls.classList.add('hide');
+    document.getElementById("question").innerHTML = "";
+    document.getElementById("welcome").innerHTML = "Thank you for taking this quiz! Please enter your initials below";
+    timeLeft = 0;
+    timeEl.innerHTML = '';
+    recordEl.classList.remove('hide')
+
+  }
+  var submitEl = document.querySelector("#submit-init")
+  var nameEl = document.querySelector("#your-name")
+
+
+  submitEl.addEventListener('click', function() {
+ var initials = nameEl.value;
+ var yourScore = {
+   initials: initials,
+   score: (correctAnswers * 25)
+ }
+ localStorage.setItem("name", yourScore.initials);
+    localStorage.setItem("score", yourScore.score);
+  })
+
+
 var questions = [
     {
-        question:'question 1', 
-        answers: ['answer 1','answer 2','answer 3','answer 4' ],
-     correct: 'answer 1'
+        question:'Which of the following is considered a loop?', 
+        answers: ['console.log','while','command line','if' ],
+     correct: 'while'
     },
     {
-        question:'question 2', 
-        answers: ['answer 11','answer 22','answer 3','answer 4' ],
-     correct: 'answer 11'
+        question:'What is an example of conditional statement?', 
+        answers: ['if','loop','event.target','return' ],
+     correct: 'if'
     },
     {
-        question:'question 3', 
-        answers: ['answer 12','answer 22','answer 3','answer 4' ],
-     correct: 'answer 12'
+        question:'What of the following is a correct way to define a function?', 
+        answers: ['Function = var ()','function() {}','function {} ()','var function [{}]' ],
+     correct: 'function() {}'
     },
+    {
+    question:'What does the following command do: createPEl.innerHTML = "Hello";', 
+    answers: ['gets an html element from the web','Prints "Hello" to the console','Creates an html element','Creates an element in the DOM' ],
+ correct: 'Creates an element in the DOM'
+},
+
 ]
