@@ -9,4 +9,4 @@ You can see my Code Quiz  [here](https://esgarsad.github.io/code-quiz/).
 
 
 
-![code-quiz](https://github.com/esgarsad/code-quiz/blob/main/pictures/capture.JPG?raw=true)
+![code-quiz](https://github.com/esgarsad/code-quiz/blob/main/assets/images/capture.JPG)

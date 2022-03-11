@@ -9,7 +9,7 @@ var recordEl = document.querySelector(".input")
 var createPEl = document.createElement("h3");
 
 createPEl.setAttribute("style", "font-size:15px")
-var timeLeft = 15;
+var timeLeft = 50;
 correctAnswers = 0;
 
 //console.log(startEl)
