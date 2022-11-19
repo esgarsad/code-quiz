@@ -44,7 +44,6 @@ ansEls.addEventListener("click", function(event) {
         timeLeft = timeLeft - 5;
     }
     if (i < (questions.length -1)) {
-        var quest = questions[i];
     i = i + 1;
     document.getElementById("question").innerHTML = questions[i].question;
     document.getElementById("ansBtn1").innerHTML = questions[i].answers[0];
